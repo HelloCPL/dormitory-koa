@@ -1,0 +1,21 @@
+记录自定义的存储过程
+
+1. 创建插入用户数据并返回插入的id存储过程
+CREATE PROCEDURE addUserAndReturnId (
+  IN nickname_pro VARCHAR(32),
+  IN avatar_url_pro VARCHAR(255),
+  IN country_pro VARCHAR(32),
+  IN province_pro VARCHAR(32),
+  IN city_pro VARCHAR(32),
+  IN open_id_pro VARCHAR(255),
+  IN scope_pro TINYINT
+)
+BEGIN
+INSERT wechat_users(nickname, avatar_url, country, province, city, open_id, scope) 
+VALUES(nickname_pro, avatar_url_pro, country_pro, province_pro, city_pro, open_id_pro, scope_pro);
+SELECT LAST_INSERT_ID();
+END //
+
+调用方法： 
+CALL addUserAndReturnId(nickname, openId);
+
