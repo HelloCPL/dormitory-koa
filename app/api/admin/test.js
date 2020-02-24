@@ -1,7 +1,7 @@
 // 导入路由
 const Router = require('koa-router')
 const router = new Router({
-  prefix: '/admin/test'
+  prefix: '/api/admin/test'
 })
 
 router.get('/', (ctx, next) => {

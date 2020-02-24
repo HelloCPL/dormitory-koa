@@ -7,18 +7,46 @@ const {
   LoginType,
 } = require(`${process.cwd()}/app/lib/enum`)
 
-// 校验整数
-class IntegerValidator extends LinValidator {
-  constructor(key) {
+// 普通的参数校验方法 
+//参数为数组 [{key, rules: [[type, msg, rule], [...], ...}, ...] 
+// type类型看官网 https://www.npmjs.com/package/validator https://github.com/validatorjs/validator.js
+class ParameterValidator extends LinValidator {
+  constructor(rules) {
     super()
-    key = key || 'id'
-    this[key] = [
-      new Rule('isInt', `${key}必须为正整数`, {
-        min: 1
-      })
-    ]
+    if (global.tools.isObject(rules)) {
+      this._setRule(rules)
+    } else if (global.tools.isArray(rules)) {
+      for (let i = 0, len = rules.length; i < len; i++) {
+        let rule = rules[i]
+        this._setRule(rule)
+      }
+    } else {
+      throw new Error('服务器发生错误，校验规则有错误')
+    }
+  }
+
+  // 设置校验
+  _setRule(rule) {
+    if (!global.tools.isArray(rule.rules) || global.tools.isEmptyArray(rule.rules))
+      throw new Error('服务器发生错误，校验规则有错误')
+    let ruleList = []
+    if(global.tools.isArray(rule.rules[0])) {
+      for(let i = 0, len = rule.rules.length; i < len; i++) {
+        let item = rule.rules[i]
+        ruleList.push(
+          new Rule(item[0], item[1], item[2])
+        )
+      }
+    } else {
+      ruleList.push(
+        new Rule(rule.rules[0], rule.rules[1], rule.rules[2])
+      )
+    }
+    console.log(ruleList)
+    this[rule.key] = ruleList
   }
 }
+
 
 // 注册验证
 class RegisterValidator extends LinValidator {
@@ -43,6 +71,6 @@ class RegisterValidator extends LinValidator {
 }
 
 module.exports = {
-  IntegerValidator,
+  ParameterValidator,
   RegisterValidator
 }

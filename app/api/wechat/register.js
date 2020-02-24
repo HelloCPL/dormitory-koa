@@ -1,7 +1,7 @@
 // 导入路由
 const Router = require('koa-router')
 const router = new Router({
-  prefix: '/wechat/register'
+  prefix: '/api/wechat/register'
 })
 
 const {
@@ -27,7 +27,6 @@ router.post('/', async (ctx, next) => {
   const result = await RegisterModel.insertUser(params)
   // 生成token
   const token = Auth.generateToken(result.uid, result.scope)
-  // 给前端返回token
   global.success({
     data: {
       token

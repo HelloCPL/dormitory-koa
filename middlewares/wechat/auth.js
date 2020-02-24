@@ -20,7 +20,8 @@ class Auth {
   // 作为中间件 校验token合法性并返回用户id和权限 
   get m() {
     return async (ctx, next) => {
-      if (isToken(ctx.path)) {
+      console.log(`访问接口：${ctx.method} ${ctx.path}`)
+      if (isToken(ctx.method, ctx.path)) {
         // 获取解析后的token
         const userToken = basicAuth(ctx.req)
         let errMsg = 'token不合法'

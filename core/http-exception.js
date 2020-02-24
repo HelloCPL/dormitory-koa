@@ -2,9 +2,9 @@
 class HttpException extends Error {
   constructor(msg, errorCode, code, data, total) {
     super()
-    this.msg = msg || '服务器错误'
+    this.msg = msg || '服务器发生错误'
     this.errorCode = errorCode || 10500
-    this.code = code || 500
+    this.code = code || 200
     this.data = data || null
     this.total = total || 0
   }
@@ -16,7 +16,7 @@ class ParameterException extends HttpException {
     super()
     this.msg = msg || '参数错误'
     this.errorCode = errorCode || 10400
-    this.code = code || 400
+    this.code = code || 200
     this.data = data || null
     this.total = total || 0
   }
@@ -28,7 +28,7 @@ class NotFound extends HttpException {
     super()
     this.msg = msg || '资源不存在'
     this.errorCode = errorCode || 10404
-    this.code = code || 404
+    this.code = code || 200
     this.data = data || null
     this.total = total || 0
   }
@@ -40,7 +40,7 @@ class Forbidden extends HttpException {
     super()
     this.msg = msg || '权限不足'
     this.errorCode = errorCode || 10403
-    this.code = code || 403
+    this.code = code || 200
     this.data = data || null
     this.total = total || 0
   }
@@ -52,7 +52,7 @@ class AuthFailed extends HttpException {
     super()
     this.msg = msg || '授权失败'
     this.errorCode = errorCode || 10401
-    this.code = code || 401
+    this.code = code || 200
     this.data = data || null
     this.total = total || 0
   }

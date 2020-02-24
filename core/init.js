@@ -19,6 +19,7 @@ class InitManager {
     InitManager.initLoadRouter(`${process.cwd()}/app/api/admin`)
     InitManager.initLoadHttpException()
     InitManager.initLoadSuccess()
+    InitManager.initLoadParameterValidator()
   }
 
   // 初始化静态资源
@@ -74,6 +75,14 @@ class InitManager {
       success
     } = require(`${process.cwd()}/app/lib/helper`)
     global.success = success
+  }
+
+  // 将普通的参数校验方法挂载到全局
+  static initLoadParameterValidator() {
+    const {
+      ParameterValidator
+    } = require(`${process.cwd()}/app/validators/wechat/validators`)
+    global.ParameterValidator = ParameterValidator
   }
 }
 

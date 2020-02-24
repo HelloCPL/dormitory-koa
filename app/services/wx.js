@@ -26,7 +26,6 @@ class WxManager {
     if (errcode) {
       throw new global.errs.AuthFailed(`openId获取失败:${errmsg}`)
     }
-    console.log('返回的openid' + result.data.openid)
     return result.data.openid
   }
 }

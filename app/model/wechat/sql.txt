@@ -17,5 +17,5 @@ SELECT LAST_INSERT_ID();
 END //
 
 调用方法： 
-CALL addUserAndReturnId(nickname, openId);
+CALL addUserAndReturnId(nickname, avatar_url, country, province, city, open_id, scope);
 
