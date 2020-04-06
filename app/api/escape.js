@@ -6,11 +6,23 @@ const escapeApi = [{
   },
   {
     method: ['POST'],
-    path: '/api/wechat/register'
+    path: '/api/wechat/file/upload'
   },
   {
     method: ['POST'],
-    path: '/api/wechat/file/upload'
+    path: '/api/wechat/login'
+  },
+  {
+    method: ['POST'],
+    path: '/api/wechat/auth'
+  },
+  {
+    method: ['POST'],
+    path: '/api/wechat/token/generate'
+  },
+  {
+    method: ['POST'],
+    path: '/api/wechat/token/verify'
   }
 ]
 

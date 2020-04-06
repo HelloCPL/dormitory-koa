@@ -165,44 +165,6 @@ const self = {
     return NaN;
   },
 
-  dateFormat(value, format) {
-    if (!(self.isDate(value) || (self.isNumber(value) && !self.isNaN(value)) || self.isString(value)))
-      return "";
-    if (self.isString(value)) {
-      value = value.replace(/-/gi, '/')
-      let val = Number(value);
-      if (self.isNumber(val) && !self.isNaN(val)) {
-        value = val;
-      }
-    }
-    let date;
-    try {
-      date = new Date(value);
-    } catch (e) {
-      return "";
-    }
-    if (date == "Invalid Date") return "";
-    // if (!value) return ''
-    // let date = new Date(value)
-    format = format || "YYYY-MM-DD hh:mm:ss";
-    let days = ["日", "一", "二", "三", "四", "五", "六"];
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-    let dateData = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-    let hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-    let minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-    let seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-    let day = days[date.getDay()];
-    format = format.replace(/(YYYY)|(yyyy)/, year);
-    format = format.replace(/(MM)/, month);
-    format = format.replace(/(DD)|(dd)/, dateData);
-    format = format.replace(/(HH)|(hh)/, hours);
-    format = format.replace(/(mm)/, minutes);
-    format = format.replace(/(SS)|(ss)/, seconds);
-    format = format.replace(/(DAY)|(day)/, day);
-    return format;
-  },
-
   //  加法精度问题（可传多个，传入数值或字符串数值，否则返回 空字符串 ''）
   accAdd(...argument) {
     let max = 0,

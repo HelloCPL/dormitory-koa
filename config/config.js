@@ -6,7 +6,8 @@ module.exports = {
     user: 'root',
     password: 'root',
     host: 'localhost',
-    port: 3306
+    port: 3306,
+    connectionLimit: 500
   },
   securityWechat: { // 小程序token配置
     secretKey: 'wechat',

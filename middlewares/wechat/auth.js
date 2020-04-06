@@ -17,7 +17,7 @@ class Auth {
     Auth.USER_ADMIN = 20 // PC端管理员默认权限为20
   }
 
-  // 作为中间件 校验token合法性并返回用户id和权限 
+  // 作为中间件 校验token合法性并返回 openId studentId dorRoomId
   get m() {
     return async (ctx, next) => {
       console.log(`访问接口：${ctx.method} ${ctx.path}`)
@@ -35,14 +35,10 @@ class Auth {
             errMsg = 'token令牌过期'
           throw new global.errs.Forbidden(errMsg)
         }
-        if (decode.scope < this.level) {
-          errMsg = '权限不足'
-          throw new global.errs.Forbidden(errMsg)
-        }
-
         ctx.auth = {
-          uid: decode.uid,
-          scope: decode.scope
+          openId: decode.openId,
+          studentId: decode.studentId,
+          dorRoomId: decode.dorRoomId,
         }
         await next()
       } else {
@@ -51,11 +47,13 @@ class Auth {
     }
   }
 
-  // 根据uid scope 生成小程序 token 并返回
-  static generateToken(uid, scope) {
+  // 根据 openId studentId dorRoomId 生成小程序 token 并返回
+  // 后期可直接通过 ctx.auth 获取 openId studentId dorRoomId
+  static generateToken(params) {
     const token = jwt.sign({
-      uid,
-      scope
+      openId: params.openId,
+      studentId: params.studentId,
+      dorRoomId: params.dorRoomId
     }, secretKey, {
       expiresIn
     })
@@ -63,13 +61,24 @@ class Auth {
   }
 
   // 检测token合法性
-  static verifyToken(token) {
-    try {
-      jwt.verify(token, secretKey)
-      return true
-    } catch (error) {
-      return false
+  static verifyToken(ctx) {
+    const userToken = basicAuth(ctx.req)
+    console.log(userToken)
+    if (!userToken || !userToken.name) {
+      throw global.success({
+        data: false
+      })
     }
+    try {
+      jwt.verify(userToken.name, secretKey)
+    } catch (error) {
+      throw global.success({
+        data: false
+      })
+    }
+    throw global.success({
+      data: true
+    })
   }
 }
 

@@ -20,7 +20,7 @@ const catchError = async (ctx, next) => {
       ctx.status = error.code
     } else {
       ctx.body = {
-        errorCode: 10500,
+        errorCode: 500,
         msg: '服务器发生错误，请求后台开发人员处理',
         data: null,
         total: 0

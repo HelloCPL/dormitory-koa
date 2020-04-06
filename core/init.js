@@ -72,9 +72,11 @@ class InitManager {
   // 将成功抛出异常方法的帮助方法挂载到全局
   static initLoadSuccess() {
     const {
-      success
+      success,
+      getCamelCase
     } = require(`${process.cwd()}/app/lib/helper`)
     global.success = success
+    global.getCamelCase = getCamelCase
   }
 
   // 将普通的参数校验方法挂载到全局
