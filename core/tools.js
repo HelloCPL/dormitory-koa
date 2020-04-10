@@ -165,6 +165,47 @@ const self = {
     return NaN;
   },
 
+  // 指定日期格式（传入毫秒值或时间格式，否则返回空）
+  //   参数一：指定时间；参数二：指定格式，如 'YYYY-MM-DD hh:mm:ss day'
+  dateFormat(value, format) {
+    if (!(self.isDate(value) || (self.isNumber(value) && !self.isNaN(value)) || self.isString(
+        value)))
+      return "";
+    if (self.isString(value)) {
+      value = value.replace(/-/gi, '/')
+      let val = Number(value);
+      if (self.isNumber(val) && !self.isNaN(val)) {
+        value = val;
+      }
+    }
+    let date;
+    try {
+      date = new Date(value);
+    } catch (e) {
+      return "";
+    }
+    if (date == "Invalid Date") return "";
+    // if (!value) return ''
+    // let date = new Date(value)
+    format = format || "YYYY-MM-DD hh:mm:ss";
+    let days = ["日", "一", "二", "三", "四", "五", "六"];
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+    let dateData = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+    let hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+    let minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+    let seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+    let day = days[date.getDay()];
+    format = format.replace(/(YYYY)|(yyyy)/, year);
+    format = format.replace(/(MM)/, month);
+    format = format.replace(/(DD)|(dd)/, dateData);
+    format = format.replace(/(HH)|(hh)/, hours);
+    format = format.replace(/(mm)/, minutes);
+    format = format.replace(/(SS)|(ss)/, seconds);
+    format = format.replace(/(DAY)|(day)/, day);
+    return format;
+  },
+
   //  加法精度问题（可传多个，传入数值或字符串数值，否则返回 空字符串 ''）
   accAdd(...argument) {
     let max = 0,
@@ -279,7 +320,57 @@ const self = {
       return num.toFixed(Math.max(0, (m[1] || "").length - m[2]));
     }
     return "";
+  },
+
+  // 返回当前时间戳
+  getTimeValue() {
+    let now = new Date()
+    return now.valueOf()
+  },
+
+  // 判断是否是一个对象，是 返回 否 抛出异常
+  judgeObject(obj, err = '参数有误') {
+    let flag = (typeof obj === "object" && !!obj && toString.call(obj) !== "[object Array]") && JSON.stringify(obj) !== "{}"
+    if (flag) {
+      return obj
+    } else {
+      throw new global.errs.ParameterException(err)
+    }
+  },
+
+  // 判断是否是一个数组，是 返回 否 抛出异常
+  judgeArray(arr, err = '参数有误') {
+    let flag = (toString.call(arr) === "[object Array]" || Array.isArray(arr) || arr instanceof Array) && JSON.stringify(arr) !== "[]"
+    if (flag) {
+      return arr
+    } else {
+      throw new global.errs.ParameterException(err)
+    }
+  },
+
+  // 枚举 是否是数组中的值，是 返回值 否 抛出异常
+  isEnum(value, arr, err = '参数有误') {
+    arr = self.judgeArray(arr, '服务器发生异常，枚觉发生错误')
+    if (arr.indexOf(value) != -1) {
+      return value
+    } else {
+      throw new global.errs.ParameterException(err)
+    }
+  },
+
+  // 参数一 是否 小于 参数二
+  isLessThan(min, max, err = '参数有误') {
+    try {
+      min = parseInt(min)
+      max = parseInt(max)
+      if (min > max) {
+        throw new global.errs.ParameterException(err)
+      }
+    } catch (e) {
+      throw new global.errs.ParameterException(err)
+    }
   }
+
 };
 
 module.exports = self

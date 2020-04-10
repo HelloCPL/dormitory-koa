@@ -78,9 +78,8 @@ class AuthVaildator extends LinValidator {
       password
     } = vals.body
     const sql = 'SELECT name, password FROM tb_students WHERE student_num = ?;'
-    const {
-      data
-    } = await db.query(sql, studentNum)
+    const res= await db.query(sql, studentNum)
+    let data = res.data[0]
     if (data) {
       if (data.name != name) {
         throw new Error('姓名错误')

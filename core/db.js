@@ -35,7 +35,7 @@ class Mysql {
         } else {
           resolve({
             err: null,
-            data: results[0]
+            data: results
           })
         }
       })
@@ -101,7 +101,7 @@ function _handleExecTransSQLParams(connection, sqlParams) {
             throw new global.errs.HttpException('服务器发生错误，数据库查询语句出错')
           })
         } else {
-          cb(null, results[0])
+          cb(null, results)
         }
       })
     }

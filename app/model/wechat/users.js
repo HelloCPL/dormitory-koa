@@ -9,9 +9,10 @@ class UsersModel {
     const sql = 'SELECT * FROM tb_students WHERE open_id = ?'
     const data = [openId]
     const res = await db.query(sql, data)
-    if (res.data) {
-      delete res.data.password
-      let obj = global.getCamelCase(res.data)
+    let resData = res.data[0]
+    if (resData) {
+      delete resData.password
+      let obj = global.getCamelCase(resData)
       global.success({
         data: {
           type: 1,
@@ -33,9 +34,10 @@ class UsersModel {
     const sql = 'SELECT * FROM tb_students WHERE open_id = ?'
     const data = [openId]
     const res = await db.query(sql, data)
-    if (res.data) {
-      delete res.data.password
-      let obj = global.getCamelCase(res.data)
+    let resData = res.data[0]
+    if (resData) {
+      delete resData.password
+      let obj = global.getCamelCase(resData)
       global.success({
         data: {
           type: 1,
@@ -59,7 +61,7 @@ class UsersModel {
       }
     ]
     const res = await db.execTrans(sqlList)
-    let data = res.data[1]
+    let data = res.data[1][0]
     if (data && global.tools.isObject(data)) {
       delete data.password
       let obj = global.getCamelCase(data)

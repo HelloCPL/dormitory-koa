@@ -11,11 +11,11 @@ module.exports = {
   },
   securityWechat: { // 小程序token配置
     secretKey: 'wechat',
-    expiresIn: 60 * 60 * 24 * 30
+    expiresIn: 60 * 60 * 2 // 有效时间默认 2小时
   },
   securityAdmin: { // PC端token配置
     secretKey: 'admin',
-    expiresIn: 60 * 60 * 24 * 30
+    expiresIn: 60 * 60 * 2
   },
   wx: {
     appId: 'wx15b4165798ef239f',
