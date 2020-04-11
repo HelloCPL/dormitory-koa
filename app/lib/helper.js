@@ -44,6 +44,36 @@ function _getCamelCase(str) {
   }).join('');
 }
 
+// 将JSON字符串转为 对象或数组 并返回
+const toParse = (param) => {
+  if(param) {
+    try {
+      let newParam = JSON.parse(param)
+      return newParam
+    }catch(e) {
+      return params
+    }
+  } else {
+    return param
+  }
+}
+
+// 转为JSON格式字符串 并返回
+const toStringify = (param) => {
+  if (param) {
+    try {
+      let newParam = JSON.stringify(param)
+      return newParam
+    } catch (e) {
+      return params
+    }
+  } else {
+    return param
+  }
+}
+
+
+
 // 返回随机数
 const returnRandomNumber = (fileName, count = 5) => {
   let randomNumber = new Date().valueOf()
@@ -67,5 +97,7 @@ function _random(lower, upper) {
 module.exports = {
   success,
   getCamelCase,
+  toParse,
+  toStringify,
   returnRandomNumber
 }

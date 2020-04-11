@@ -369,6 +369,24 @@ const self = {
     } catch (e) {
       throw new global.errs.ParameterException(err)
     }
+  },
+
+  // 格式化文件大小 传入的文件单位为 字节 B
+  formatFileSize(fileSize) {
+    if (!fileSize && fileSize != 0) return ''
+    try {
+      let size1 = parseFloat((fileSize / 1024 / 1024).toFixed(2))
+      let size2 = parseFloat((fileSize / 1024).toFixed(2))
+      if (size1 >= 1) {
+        return size1 + 'M'
+      } else if (size2 >= 1) {
+        return size2 + 'KB'
+      } else {
+        return parseInt(fileSize) + 'B'
+      }
+    } catch (e) {
+      return fileSize
+    }
   }
 
 };
