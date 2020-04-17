@@ -1,7 +1,6 @@
 // 不需要token的api路径配置，如果不配置聚会进行token验证拦截
 
-const escapeApi = [
-  {
+const escapeApi = [{
     method: ['GET', 'POST'],
     path: '/api/wechat/test'
   },
@@ -24,7 +23,19 @@ const escapeApi = [
   {
     method: ['POST'],
     path: '/api/wechat/token/verify'
-  }
+  },
+  {
+    method: ['POST'],
+    path: '/api/wechat/management/notices/list'
+  },
+  {
+    method: ['POST'],
+    path: '/api/wechat/management/notices/detail'
+  },
+  {
+    method: ['POST'],
+    path: '/api/wechat/management/images/list'
+  },
 ]
 
 // 校验是否需要拦截

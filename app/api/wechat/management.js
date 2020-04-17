@@ -2,7 +2,6 @@
  *                 ---------------该模块包括------------------------
  * 1.日常公告管理（ 公告 日常管理 管理规定 服务指南 安全警示 中心简介）
  * 2.图片管理 （轮播 宿舍相关信息图 广告图）
- * 3.
  * 
  *  */
 
@@ -15,7 +14,7 @@ const router = new Router({
 const {
   ParameterValidator,
 } = require(`${process.cwd()}/app/validators/wechat/validators`)
-const CommonModel = require(`${process.cwd()}/app/model/wechat/common`)
+// const CommonModel = require(`${process.cwd()}/app/model/wechat/common`)
 const ManagementModel = require(`${process.cwd()}/app/model/wechat/management`)
 
 // ------- 1.日常公告管理（ 公告 日常管理 管理规定 服务指南 安全警示 中心简介） -------------
@@ -46,7 +45,7 @@ router.post('/notices/detail', async (ctx, next) => {
   await ManagementModel.noticesDetail(id)
 })
 
-// ---------------- 图片管理（ 轮播 宿舍相关信息图 广告图） --------------
+// ---------------- 2.图片管理（ 轮播 宿舍相关信息图 广告图） --------------
 
 // 图片管理 查询列表
 // 参数 必填 type [1, 2, 3] 选填 pageNo 默认 1 pageSize 默认 10

@@ -4,6 +4,8 @@
  * 2.实名认证接口
  * 3.请求token
  * 4.校验token
+ * 5.宿舍成员信息(本宿舍) 列表 详情
+ * 6.宿舍管理员信息(本栋) 列表 详情
  *  */
 
 // 导入路由
@@ -18,6 +20,7 @@ const {
   VerifyTokenValidator
 } = require(`${process.cwd()}/app/validators/wechat/validators`)
 const WxManager = require(`${process.cwd()}/app/services/wx`)
+const CommonModel = require(`${process.cwd()}/app/model/wechat/common`)
 const UsersModel = require(`${process.cwd()}/app/model/wechat/users`)
 
 
@@ -75,6 +78,53 @@ router.post('/token/generate', async (ctx, next) => {
 router.post('/token/verify', async (ctx, next) => {
   const Auth = require(`${process.cwd()}/middlewares/wechat/auth`)
   Auth.verifyToken(ctx)
+})
+
+// -------------- 5.宿舍成员信息(本宿舍) 列表 详情 -----------------
+
+// 宿舍成员信息(本宿舍) 列表
+router.post('/dormitory/member/list', async (ctx, next) => {
+  let userInfo = await CommonModel.getUserInfo(ctx.auth)
+  // 查询并返回数据
+  await UsersModel.menberList(userInfo)
+})
+
+// 宿舍成员信息(本宿舍) 详情
+router.post('/dormitory/member/detail', async (ctx, next) => {
+  // 获取详情
+  const v = await new ParameterValidator([{
+    key: 'id',
+    rules: ['isLength', '参数必传', {
+      min: 1
+    }]
+  }]).validate(ctx)
+  let id = await v.get('body.id')
+  // 查询并返回数据
+  await UsersModel.menberDetail(id, ctx.auth.dorRoomId)
+})
+
+// -------------------  6.宿舍管理员信息(本栋) 列表 详情 --------------------
+
+// 宿舍管理员信息(本栋) 列表
+router.post('/dormitory/admin/list', async (ctx, next) => {
+  let userInfo = await CommonModel.getUserInfo(ctx.auth)
+  // 查询并返回数据
+  await UsersModel.adminList(userInfo)
+})
+
+// 宿舍管理员信息(本栋) 详情
+router.post('/dormitory/admin/detail', async (ctx, next) => {
+  // 获取详情
+  const v = await new ParameterValidator([{
+    key: 'id',
+    rules: ['isLength', '参数必传', {
+      min: 1
+    }]
+  }]).validate(ctx)
+  let id = await v.get('body.id')
+  let userInfo = await CommonModel.getUserInfo(ctx.auth)
+  // 查询并返回数据
+  await UsersModel.adminDetail(id, userInfo)
 })
 
 module.exports = router
