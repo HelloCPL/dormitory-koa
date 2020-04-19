@@ -2,7 +2,8 @@
  *                 ---------------该模块包括------------------------
  * 1.学生宿舍值班表 编辑 查看详情
  * 2.学生宿舍自定义日程表 增加 查看列表 删除
- * 
+ * 3.评优、违纪、卫生检查 查看列表
+ * 4.宿舍投诉/建议 增加 查看列表 删除
  *  */
 
 // 导入路由
@@ -14,6 +15,7 @@ const router = new Router({
 const {
   ParameterValidator
 } = require(`${process.cwd()}/app/validators/wechat/validators`)
+const CommonModel = require(`${process.cwd()}/app/model/wechat/common`)
 const DormitoryModel = require(`${process.cwd()}/app/model/wechat/dormitory`)
 
 //  -------------- 1.学生宿舍值班表 编辑 查看详情 -----------------
@@ -114,6 +116,65 @@ router.post('/schedule/month/list', async (ctx, next) => {
   month = global.tools.dateFormat(month, 'YYYY-MM')
   // 查询数据并返回
   await DormitoryModel.scheduleMonthList(month, ctx.auth)
+})
+
+//  -------------- 3.评优、违纪、卫生检查 查看列表 -----------------
+
+// 评优、 违纪、 卫生检查 查看列表
+// 参数 必填 type [1, 2, 3, 4] 选填 pageNo pageSize
+router.post('/evaluation/list', async (ctx, next) => {
+  // 获取参数
+  const type = global.tools.isEnum(ctx.request.body.type, [1, 2, 3, 4], 'type参数有误')
+  const pageNo = Number(ctx.request.body.pageNo) || 1
+  const pageSize = Number(ctx.request.body.pageSize) || 10
+  // 查询数据并返回
+  await DormitoryModel.evaluationList(type, pageNo, pageSize, ctx.auth)
+})
+
+// ----------------------- 4.宿舍投诉/建议 增加 查看列表 删除 ---------------------------
+
+// 宿舍投诉/建议 增加
+// 参数 必填 type content 选填 imgList 图片短路经数组
+router.post('/suggestion/add', async (ctx, next) => {
+  // 获取参数
+  let type = global.tools.isEnum(ctx.request.body.type, [1, 2], 'type参数有误')
+  const v = await new ParameterValidator([{
+    key: 'content',
+    rules: ['isLength', '参数必传', {
+      min: 1
+    }]
+  }]).validate(ctx)
+  let content = await v.get('body.content')
+  let imgList = global.toStringify(ctx.request.body.imgList)
+  let userInfo = await CommonModel.getUserInfo(ctx.auth)
+  // 查询数据并返回
+  await DormitoryModel.suggestionAdd(type, content, imgList, userInfo)
+})
+
+// 宿舍投诉/建议 查看列表
+// 参数 必填 status (0 1 2 all) 选填 pageNo pageSize
+router.post('/suggestion/list', async (ctx, next) => {
+  // 获取参数
+  let status = global.tools.isEnum(ctx.request.body.status, [0, 1, 2, 'all'], 'status参数有误')
+  const pageNo = Number(ctx.request.body.pageNo) || 1
+  const pageSize = Number(ctx.request.body.pageSize) || 10
+  // 查询数据并返回
+  await DormitoryModel.suggestionList(status, pageNo, pageSize, ctx.auth)
+})
+
+// 宿舍投诉/建议 查看列表 删除
+// 参数 必填 id
+router.post('/suggestion/delete', async (ctx, next) => {
+  // 获取参数
+  const v = await new ParameterValidator([{
+    key: 'id',
+    rules: ['isLength', '参数必传', {
+      min: 1
+    }]
+  }]).validate(ctx)
+  let id = await v.get('body.id')
+  // 查询数据并返回
+  await DormitoryModel.suggestionDelete(id, ctx.auth)
 })
 
 module.exports = router

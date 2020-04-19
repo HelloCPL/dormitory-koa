@@ -11,9 +11,7 @@ router.post('/upload', async (ctx, next) => {
   // 读取写入文件返回文件路径
   const url = await UploadFileModel.writeFile(ctx)
   global.success({
-    data: {
-      url: url
-    }
+    data: url
   })
 })
 

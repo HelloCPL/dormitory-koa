@@ -51,7 +51,7 @@ const toParse = (param) => {
       let newParam = JSON.parse(param)
       return newParam
     }catch(e) {
-      return params
+      return param
     }
   } else {
     return param

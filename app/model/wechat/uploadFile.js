@@ -11,18 +11,19 @@ class UploadFileModel {
     // 创建可读流
     const reader = fs.createReadStream(file.path)
     let fileName = returnRandomNumber(file.name)
-    let filePath = path.join(__dirname, '../../../static/public/', fileName)
-    let url = global.config.servicesUrl + `public/${fileName}`
+    let filePath = path.join(__dirname, '../../../static/images/', fileName)
+    let url = global.config.servicesUrl + `images/${fileName}`
     const upStream = fs.createWriteStream(filePath)
     reader.pipe(upStream)
-    return url
+    return {
+      shortName: fileName,
+      fullName: url
+    }
   }
 
   // 删除文件
-  static async deleteFile(url) {
-    let index = url.lastIndexOf('/')
-    let fileName = url.substring(index + 1)
-    let filePath = path.join(__dirname, '../../../static/public/', fileName)
+  static async deleteFile(shortName) {
+    let filePath = path.join(__dirname, '../../../static/images/', shortName)
     // 查找文件
     try {
       let stat = fs.statSync(filePath)

@@ -27,10 +27,10 @@ class InitManager {
     // 处理公共的静态资源目录
     const pathStatic = path.join(__dirname, '../static')
     InitManager.app.use(Static(pathStatic))
-    // 访问路径如  http://localhost:3000/public/bg.jpg
+    // 访问路径如  http://localhost:3000/images/bg.jpg
 
     // 处理需要token才能访问的静态资源目录
-    // app.use(Static(path.join(__dirname, 'static', 'private')))
+    
   }
 
   // 将全局配置装载到全局
@@ -73,7 +73,7 @@ class InitManager {
   static initLoadSuccess() {
     const {
       success,
-      returnRandomNumber,
+      // returnRandomNumber,
       getCamelCase,
       toParse,
       toStringify
