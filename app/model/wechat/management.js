@@ -10,13 +10,15 @@ class ManagementModel {
   // updateTimeStr createTimeStr startTimeStr endTimeStr
   static async noticesList(type, pageNo, pageSize) {
     let page = (pageNo - 1) * pageSize
+    let nowTime = global.tools.getTimeValue()
+    console.log(nowTime)
     let sqlList = [{
-        sql: 'SELECT COUNT(id) as total FROM tb_management_notices WHERE type = ? and is_public = 1;',
-        data: [type]
+        sql: 'SELECT COUNT(id) as total FROM tb_management_notices WHERE type = ? and is_public = 1 and start_time < ? and end_time > ?;',
+        data: [type, nowTime, nowTime]
       },
       {
-        sql: 'SELECT t1.id, t1.release_user_id as releaseUserId, t2.name as releaseUserName, t1.update_time as updateTime, t1.create_time as createTime, t1.start_time as startTime, t1.end_time as endTime, t1.is_top as isTop, t1.sort, t1.type, t1.title, t1.abstract, t1.thumbnail, t1.browse_count as browseCount FROM tb_management_notices t1 LEFT JOIN tb_admin t2 ON t1.release_user_id = t2.id WHERE t1.type = ? and t1.is_public = 1 ORDER BY t1.is_top DESC, t1.sort DESC, update_time DESC, id DESC LIMIT ?, ?;',
-        data: [type, page, pageSize]
+        sql: 'SELECT t1.id, t1.release_user_id as releaseUserId, t2.name as releaseUserName, t1.update_time as updateTime, t1.create_time as createTime, t1.start_time as startTime, t1.end_time as endTime, t1.is_top as isTop, t1.sort, t1.type, t1.title, t1.abstract, t1.thumbnail, t1.browse_count as browseCount FROM tb_management_notices t1 LEFT JOIN tb_admin t2 ON t1.release_user_id = t2.id WHERE t1.type = ? and t1.is_public = 1 and t1.start_time < ? and t1.end_time > ? ORDER BY t1.is_top DESC, t1.sort DESC, update_time DESC, id DESC LIMIT ?, ?;',
+        data: [type, nowTime, nowTime, page, pageSize]
       }
     ]
     const res = await db.execTrans(sqlList)
@@ -89,13 +91,14 @@ class ManagementModel {
   // updateTimeStr createTimeStr startTimeStr endTimeStr
   static async imagesList(type, pageNo, pageSize) {
     let page = (pageNo - 1) * pageSize
+    let nowTime = global.tools.getTimeValue()
     let sqlList = [{
-        sql: 'SELECT COUNT(id) as total FROM tb_management_images WHERE type = ? and is_public = 1;',
-        data: [type]
+        sql: 'SELECT COUNT(id) as total FROM tb_management_images WHERE type = ? and is_public = 1 and start_time < ? and end_time > ?;',
+        data: [type, nowTime, nowTime]
       },
       {
-        sql: 'SELECT t1.id, t1.release_user_id as releaseUserId, t2.name as releaseUserName, t1.update_time as updateTime, t1.create_time as createTime, t1.start_time as startTime, t1.end_time as endTime, t1.is_top as isTop, t1.sort, t1.type, t1.desc, t1.url, t1.remark FROM tb_management_images t1 LEFT JOIN tb_admin t2 ON t1.release_user_id = t2.id WHERE t1.type = ? and t1.is_public = 1 ORDER BY t1.is_top DESC, t1.sort DESC, update_time DESC, id DESC LIMIT ?, ?;',
-        data: [type, page, pageSize]
+        sql: 'SELECT t1.id, t1.release_user_id as releaseUserId, t2.name as releaseUserName, t1.update_time as updateTime, t1.create_time as createTime, t1.start_time as startTime, t1.end_time as endTime, t1.is_top as isTop, t1.sort, t1.type, t1.desc, t1.url, t1.remark FROM tb_management_images t1 LEFT JOIN tb_admin t2 ON t1.release_user_id = t2.id WHERE t1.type = ? and t1.is_public = 1 and t1.start_time < ? and t1.end_time > ? ORDER BY t1.is_top DESC, t1.sort DESC, update_time DESC, id DESC LIMIT ?, ?;',
+        data: [type, nowTime, nowTime, page, pageSize]
       }
     ]
     const res = await db.execTrans(sqlList)

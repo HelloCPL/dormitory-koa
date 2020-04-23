@@ -4,6 +4,7 @@
  * 2.学生宿舍自定义日程表 增加 查看列表 删除
  * 3.评优、违纪、卫生检查 查看列表
  * 4.宿舍投诉/建议 增加 查看列表 删除
+ * 5.宿舍申请 增加 查看列表 删除
  *  */
 
 // 导入路由
@@ -175,6 +176,79 @@ router.post('/suggestion/delete', async (ctx, next) => {
   let id = await v.get('body.id')
   // 查询数据并返回
   await DormitoryModel.suggestionDelete(id, ctx.auth)
+})
+
+// ---------------------- 5.宿舍申请 增加 查看列表 删除 -------------------------
+// 宿舍申请 增加
+// 参数 必填 type content reason startTime endTime 
+router.post('/apply/add', async (ctx, next) => {
+  // 获取参数
+  const v = await new ParameterValidator([{
+      key: 'type',
+      rules: ['isLength', '参数必传', {
+        min: 1
+      }]
+    },
+    {
+      key: 'content',
+      rules: ['isLength', '参数必传', {
+        min: 1
+      }]
+    },
+    {
+      key: 'reason',
+      rules: ['isLength', '参数必传', {
+        min: 1
+      }]
+    },
+    {
+      key: 'startTime',
+      rules: ['isLength', '参数必传', {
+        min: 1
+      }]
+    }, {
+      key: 'endTime',
+      rules: ['isLength', '参数必传', {
+        min: 1
+      }]
+    }
+  ]).validate(ctx)
+  let params = {
+    type: await v.get('body.type'),
+    content: await v.get('body.content'),
+    reason: await v.get('body.reason'),
+    startTime: await v.get('body.startTime'),
+    endTime: await v.get('body.endTime'),
+  }
+  let userInfo = await CommonModel.getUserInfo(ctx.auth)
+  // 查询数据并返回
+  await DormitoryModel.applyAdd(params, userInfo)
+})
+
+// 宿舍申请 查看列表
+// 参数 必填 status (0 1 2 all) 选填 pageNo pageSize
+router.post('/apply/list', async (ctx, next) => {
+  // 获取参数
+  let status = global.tools.isEnum(ctx.request.body.status, [0, 1, 2, 'all'], 'status参数有误')
+  const pageNo = Number(ctx.request.body.pageNo) || 1
+  const pageSize = Number(ctx.request.body.pageSize) || 10
+  // 查询数据并返回
+  await DormitoryModel.applyList(status, pageNo, pageSize, ctx.auth)
+})
+
+// 宿舍申请 删除
+// 参数 必填 id
+router.post('/apply/delete', async (ctx, next) => {
+  // 获取参数
+  const v = await new ParameterValidator([{
+    key: 'id',
+    rules: ['isLength', '参数必传', {
+      min: 1
+    }]
+  }]).validate(ctx)
+  let id = await v.get('body.id')
+  // 查询数据并返回
+  await DormitoryModel.applyDelete(id, ctx.auth)
 })
 
 module.exports = router
