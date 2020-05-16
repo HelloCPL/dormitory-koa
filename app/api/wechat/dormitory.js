@@ -15,7 +15,7 @@ const router = new Router({
 
 const {
   ParameterValidator
-} = require(`${process.cwd()}/app/validators/wechat/validators`)
+} = require(`${process.cwd()}/app/validators/validators`)
 const CommonModel = require(`${process.cwd()}/app/model/wechat/common`)
 const DormitoryModel = require(`${process.cwd()}/app/model/wechat/dormitory`)
 
@@ -226,10 +226,10 @@ router.post('/apply/add', async (ctx, next) => {
 })
 
 // 宿舍申请 查看列表
-// 参数 必填 status (0 1 2 all) 选填 pageNo pageSize
+// 参数 必填 status (0 1 2 3 all) 选填 pageNo pageSize
 router.post('/apply/list', async (ctx, next) => {
   // 获取参数
-  let status = global.tools.isEnum(ctx.request.body.status, [0, 1, 2, 'all'], 'status参数有误')
+  let status = global.tools.isEnum(ctx.request.body.status, [0, 1, 2, 3, 'all'], 'status参数有误')
   const pageNo = Number(ctx.request.body.pageNo) || 1
   const pageSize = Number(ctx.request.body.pageSize) || 10
   // 查询数据并返回

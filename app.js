@@ -11,6 +11,18 @@ const catchError = require('./middlewares/exception')
 
 const app = new Koa()
 
+// 跨域处理
+app.use(async (ctx, next) => {
+  console.log('aaaa', ctx.headers.origin)
+  ctx.set('Access-Control-Allow-Origin', '*'); // 很奇怪的是，使用 * 会出现一些其他问题
+  ctx.set('Access-Control-Allow-Headers', 'content-type');
+  ctx.set('Access-Control-Allow-Methods', 'OPTIONS,GET,HEAD,PUT,POST,DELETE,PATCH')
+  // if (ctx.method == 'OPTIONS') {
+  //   ctx.body = 'ok'
+  // }
+  await next()
+});
+
 // 全局处理异常
 app.use(catchError)
 // 处理body参数中间件

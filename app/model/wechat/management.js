@@ -17,7 +17,7 @@ class ManagementModel {
         data: [type, nowTime, nowTime]
       },
       {
-        sql: 'SELECT t1.id, t1.release_user_id as releaseUserId, t2.name as releaseUserName, t1.update_time as updateTime, t1.create_time as createTime, t1.start_time as startTime, t1.end_time as endTime, t1.is_top as isTop, t1.sort, t1.type, t1.title, t1.abstract, t1.thumbnail, t1.browse_count as browseCount FROM tb_management_notices t1 LEFT JOIN tb_admin t2 ON t1.release_user_id = t2.id WHERE t1.type = ? and t1.is_public = 1 and t1.start_time < ? and t1.end_time > ? ORDER BY t1.is_top DESC, t1.sort DESC, update_time DESC, id DESC LIMIT ?, ?;',
+        sql: 'SELECT t1.id, t1.release_user_id as releaseUserId, t2.name as releaseUserName, t1.update_time as updateTime, t1.create_time as createTime, t1.start_time as startTime, t1.end_time as endTime, t1.is_top as isTop, t1.sort, t1.type, t1.title, t1.abstract, t1.thumbnail, t1.browse_count as browseCount FROM tb_management_notices t1 LEFT JOIN tb_admin t2 ON t1.release_user_id = t2.id WHERE t1.type = ? and t1.is_public = 1 and t1.start_time < ? and t1.end_time > ? ORDER BY t1.is_top DESC, t1.sort DESC, t1.update_time DESC, t1.id DESC LIMIT ?, ?;',
         data: [type, nowTime, nowTime, page, pageSize]
       }
     ]
@@ -71,9 +71,8 @@ class ManagementModel {
       dataList['fileUrl'] = global.toParse(dataList['fileUrl'])
       if (global.tools.isArray(dataList['fileUrl']) && !global.tools.isEmptyArray(dataList['fileUrl'])) {
         for (let i = 0, len = dataList['fileUrl'].length; i < len; i++) {
-          if (dataList['fileUrl'][i]['filePath']) {
-            dataList['fileUrl'][i]['filePath'] = global.config.fileUrl + dataList['fileUrl'][i]['filePath']
-             dataList['fileUrl'][i]['fileSize'] = global.tools.formatFileSize(dataList['fileUrl'][i]['fileSize'])
+          if (dataList['fileUrl'][i]['shortName']) {
+            dataList['fileUrl'][i]['fullName'] = global.config.fileUrl + dataList['fileUrl'][i]['shortName']
           }
         }
       }

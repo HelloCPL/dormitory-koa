@@ -18,7 +18,7 @@ const {
   ParameterValidator,
   AuthVaildator,
   VerifyTokenValidator
-} = require(`${process.cwd()}/app/validators/wechat/validators`)
+} = require(`${process.cwd()}/app/validators/validators`)
 const WxManager = require(`${process.cwd()}/app/services/wx`)
 const CommonModel = require(`${process.cwd()}/app/model/wechat/common`)
 const UsersModel = require(`${process.cwd()}/app/model/wechat/users`)

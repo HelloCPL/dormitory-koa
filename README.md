@@ -32,7 +32,7 @@
 
 - 引用 `/core/utils.js` 和 `/core/lin-validator.js` 两个文件
 
-- 然后利用 `/core/lin-validator.js` 在 `/app/validators/wechat/validators`中自定义相关参数类型校验
+- 然后利用 `/core/lin-validator.js` 在 `/app/validators/validators`中自定义相关参数类型校验
 
 #### 连接mysql数据库
 

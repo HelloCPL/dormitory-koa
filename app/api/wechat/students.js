@@ -13,7 +13,7 @@ const router = new Router({
 
 const {
   ParameterValidator,
-} = require(`${process.cwd()}/app/validators/wechat/validators`)
+} = require(`${process.cwd()}/app/validators/validators`)
 const CommonModel = require(`${process.cwd()}/app/model/wechat/common`)
 const StudentsModel = require(`${process.cwd()}/app/model/wechat/students`)
 

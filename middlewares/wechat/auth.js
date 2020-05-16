@@ -20,8 +20,8 @@ class Auth {
   // 作为中间件 校验token合法性并返回 openId studentId dorRoomId
   get m() {
     return async (ctx, next) => {
-      console.log(`访问接口：${ctx.method} ${ctx.path}`)
-      if (isToken(ctx.method, ctx.path)) {
+      if (ctx.path.startsWith('/api/wechat') && isToken(ctx.method, ctx.path)) {
+        console.log(`访问接口：${ctx.method} ${ctx.path}`)
         // 获取解析后的token
         const userToken = basicAuth(ctx.req)
         let errMsg = 'token不合法'
@@ -42,6 +42,7 @@ class Auth {
         }
         await next()
       } else {
+        console.log(`访问接口：${ctx.method} ${ctx.path}`)
         await next()
       }
     }

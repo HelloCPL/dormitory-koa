@@ -5,50 +5,43 @@ const jwt = require('jsonwebtoken')
 const {
   secretKey,
   expiresIn
-} = global.config.securityAdmin
+} = require(`${process.cwd()}/config/config`).securityAdmin
+// 导入是否需要token验证
+const isToken = require(`${process.cwd()}/app/api/escape`)
 
 class Auth {
-  constructor(level) {
-    // 权限控制
-    this.level = level || 1
-    Auth.USER_WECHAT = 10 // 小程序用户默认权限为10
-    Auth.USER_ADMIN = 20 // PC端管理员默认权限为20
-  }
-
   // 作为中间件 校验token合法性并返回用户id和权限 
   get m() {
     return async (ctx, next) => {
-      // 获取解析后的token
-      const userToken = basicAuth(ctx, req)
-      let errMsg = 'token不合法'
-      let decode
-      if (!userToken || !userToken.name)
-        throw new global.errs.Forbidden(errMsg)
-      try {
-        decode = jwt.verify(userToken.name, secretKey)
-      } catch (error) {
-        if (error.name === 'TokenExpiredError')
-          errMsg = 'token令牌过期'
-        throw new global.errs.Forbidden(errMsg)
+      if (ctx.path.startsWith('/api/admin') && isToken(ctx.method, ctx.path)) {
+        console.log(`访问接口：${ctx.method} ${ctx.path}`)
+        // 获取解析后的token
+        const userToken = basicAuth(ctx.req)
+        let errMsg = 'token不合法'
+        let decode
+        if (!userToken || !userToken.name)
+          throw new global.errs.Forbidden(errMsg)
+        try {
+          decode = jwt.verify(userToken.name, secretKey)
+        } catch (error) {
+          if (error.name === 'TokenExpiredError')
+            errMsg = 'token令牌过期'
+          throw new global.errs.Forbidden(errMsg)
+        }
+        ctx.authAdmin = {
+          id: decode.id
+        }
+        await next()
+      } else {
+        await next()
       }
-      if (decode.scope < this.level) {
-        errMsg = '权限不足'
-        throw new global.errs.Forbidden(errMsg)
-      }
-
-      ctx.auth = {
-        uid: decode.uid,
-        scope: decode.scope
-      }
-      await next()
     }
   }
 
   // 根据uid scope 生成PC端 token 并返回
-  static generateToken(uid, scope) {
+  static generateToken(id) {
     const token = jwt.sign({
-      uid,
-      scope
+      id
     }, secretKey, {
       expiresIn
     })
@@ -56,13 +49,24 @@ class Auth {
   }
 
   // 检测token合法性
-  static verifyToken(token) {
-    try {
-      jwt.verify(token, secretKey)
-      return true
-    } catch (error) {
-      return false
+  static verifyToken(ctx) {
+    const userToken = basicAuth(ctx.req)
+    console.log(userToken)
+    if (!userToken || !userToken.name) {
+      throw global.success({
+        data: false
+      })
     }
+    try {
+      jwt.verify(userToken.name, secretKey)
+    } catch (error) {
+      throw global.success({
+        data: false
+      })
+    }
+    throw global.success({
+      data: true
+    })
   }
 }
 

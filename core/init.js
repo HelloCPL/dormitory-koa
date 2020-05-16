@@ -7,6 +7,7 @@ const requireDirectory = require('require-directory')
 const Static = require('koa-static')
 // 导入token检测权限中间件
 const Auth = require(`${process.cwd()}/middlewares/wechat/auth`)
+const AuthAdmin = require(`${process.cwd()}/middlewares/admin/auth`)
 
 class InitManager {
   // 初始化
@@ -15,8 +16,8 @@ class InitManager {
     InitManager.initStatic()
     InitManager.initLoadConfig()
     InitManager.initLoadTools()
-    InitManager.initLoadRouter(`${process.cwd()}/app/api/wechat`)
-    InitManager.initLoadRouter(`${process.cwd()}/app/api/admin`)
+    InitManager.initLoadRouter(`${process.cwd()}/app/api`)
+    // InitManager.initLoadRouter(`${process.cwd()}/app/api/admin`)
     InitManager.initLoadHttpException()
     InitManager.initLoadSuccess()
     InitManager.initLoadParameterValidator()
@@ -47,8 +48,10 @@ class InitManager {
 
   // 自动加载路由文件
   static initLoadRouter(path) {
-    // 设置token检测中间件
+    // 设置token检测中间件 小程序
     InitManager.app.use(new Auth().m)
+    // 设置token检测中间件 PC端
+    InitManager.app.use(new AuthAdmin().m)
     
     requireDirectory(module, path, {
       visit: loadRouterModule
@@ -91,7 +94,7 @@ class InitManager {
   static initLoadParameterValidator() {
     const {
       ParameterValidator
-    } = require(`${process.cwd()}/app/validators/wechat/validators`)
+    } = require(`${process.cwd()}/app/validators/validators`)
     global.ParameterValidator = ParameterValidator
   }
 }

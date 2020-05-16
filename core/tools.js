@@ -350,7 +350,7 @@ const self = {
 
   // 枚举 是否是数组中的值，是 返回值 否 抛出异常
   isEnum(value, arr, err = '参数有误') {
-    arr = self.judgeArray(arr, '服务器发生异常，枚觉发生错误')
+    arr = self.judgeArray(arr, '服务器发生异常，枚举发生错误')
     if (arr.indexOf(value) != -1) {
       return value
     } else {

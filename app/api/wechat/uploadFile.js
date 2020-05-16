@@ -4,7 +4,7 @@ const router = new Router({
   prefix: '/api/wechat/file'
 })
 
-const UploadFileModel = require(`${process.cwd()}/app/model/wechat/uploadFile`)
+const UploadFileModel = require(`${process.cwd()}/app/model/uploadFile`)
 
 // 上传单个文件
 router.post('/upload', async (ctx, next) => {

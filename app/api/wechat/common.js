@@ -12,7 +12,7 @@ const router = new Router({
 
 const {
   ParameterValidator
-} = require(`${process.cwd()}/app/validators/wechat/validators`)
+} = require(`${process.cwd()}/app/validators/validators`)
 const CommonModel = require(`${process.cwd()}/app/model/wechat/common`)
 
 // ---------------------- 1. 评价 增加 删除 --------------------

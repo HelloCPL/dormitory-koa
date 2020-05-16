@@ -84,9 +84,25 @@ const returnRandomNumber = (fileName, count = 5) => {
   let arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
   for (let i = 0; i < count; i++) {
     let num = _random(0, 35)
-    randomNumber = arr[num] + randomNumber
+    randomNumber += arr[num]
   }
   return randomNumber + suffix
+}
+
+// 返回 文件名 + 随机数
+const returnRandomFile = (fileName, count = 5) => {
+  let randomNumber = '-' + new Date().valueOf()
+  let index = fileName.lastIndexOf('.')
+  if (index === -1)
+    throw new global.errs.ParameterException('上传的文件格式有错误')
+  let name = fileName.substring(0, index)
+  let suffix = fileName.substring(index)
+  let arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+  for (let i = 0; i < count; i++) {
+    let num = _random(0, 35)
+    randomNumber += arr[num]
+  }
+  return name + randomNumber + suffix
 }
 
 // 返回 [lower, upper]
@@ -99,5 +115,6 @@ module.exports = {
   getCamelCase,
   toParse,
   toStringify,
-  returnRandomNumber
+  returnRandomNumber,
+  returnRandomFile
 }

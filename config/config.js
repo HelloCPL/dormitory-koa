@@ -15,7 +15,7 @@ module.exports = {
   },
   securityAdmin: { // PC端token配置
     secretKey: 'admin',
-    expiresIn: 60 * 60 * 2
+    expiresIn: 60 * 60 * 24 * 30 // 30天
   },
   wx: {
     appId: 'wx15b4165798ef239f',
