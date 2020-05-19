@@ -166,7 +166,6 @@ router.post('/notices/list', async (ctx, next) => {
     type: ctx.request.body.type
   }
   await ManagementModel.noticesList(params)
-
 })
 
 // 日常公告管理 查询详情

@@ -296,7 +296,6 @@ class ManagementModel {
       console.log(dataList)
       // 处理图片
       for (let i = 0, len = dataList.length; i < len; i++) {
-      
         let url = dataList[i]['url']
         if (url) {
           dataList[i]['url'] = {

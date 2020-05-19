@@ -229,7 +229,7 @@ class StudentsModel {
         if (dataList[i]['status'] == 1 || dataList[i]['status'] == 2) {
           if (nowTime < dataList[i]['startTime']) {
             dataList[i]['status'] = 1
-          } else if (nowTime >= dataList[i]['startTime'] && nowTime < dataList[i]['endTime']) {
+          } else if (nowTime >= dataList[i]['startTime']) {
             dataList[i]['status'] = 2
           }
         }

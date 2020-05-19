@@ -30,6 +30,12 @@ class UsersModel {
       if (resData) {
         resData.powerList = toArray(resData.powerList)
         resData.dorBuildingList = toArray(resData.dorBuildingList)
+        if (resData.headImg) {
+          resData.headImg = {
+            shortName: resData.headImg,
+            fullName: global.config.imageUrl + resData.headImg
+          }
+        }
         global.success({
           data: resData
         })
