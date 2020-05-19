@@ -87,6 +87,16 @@ class UsersModel {
     if (res.err) {
       throw new global.errs.HttpException(res.err)
     } else {
+      if (global.tools.isArray(res.data)) {
+        for (let i = 0, len = res.data.length; i < len; i++) {
+          if (res.data[i]['headImg']) {
+            res.data[i]['headImg'] = {
+              shortName: res.data[i]['headImg'],
+              fullName: global.config.imageUrl + res.data[i]['headImg']
+            }
+          }
+        }
+      }
       global.success({
         data: {
           dorBuildingName: userInfo.dorBuildingName,
@@ -143,6 +153,12 @@ class UsersModel {
         let dorBuildingKey = global.toParse(item.dorBuildingKey)
         if (dorBuildingKey.indexOf(dorBuildingId) != -1) {
           delete item.dorBuildingKey
+          if (item.headImg) {
+            item.headImg = {
+              shortName: item.headImg,
+              fullName: global.config.imageUrl + item.headImg
+            }
+          }
           arr.push(item)
         }
       })
@@ -163,6 +179,12 @@ class UsersModel {
       throw new global.errs.HttpException(res.err)
     } else {
       let resData = res.data[0]
+      if (resData.headImg) {
+        resData.headImg = {
+          shortName: resData.headImg,
+          fullName: global.config.imageUrl + resData.headImg
+        }
+      }
       if (resData) {
         global.success({
           data: resData

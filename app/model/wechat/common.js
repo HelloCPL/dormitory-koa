@@ -15,6 +15,12 @@ class CommonModel {
       let resData = res.data[0]
       resData['admissionTimeStr'] = global.tools.dateFormat(resData['admissionTime'], 'YYYY-MM-DD')
       resData['graduationTimeStr'] = global.tools.dateFormat(resData['graduationTime'], 'YYYY-MM-DD')
+      if (resData.headImg) {
+        resData.headImg = {
+          shortName: resData.headImg,
+          fullName: global.config.imageUrl + resData.headImg
+        }
+      }
       return resData
     }
   }
