@@ -404,6 +404,36 @@ class adminStudentInfoDeleteVaildator extends LinValidator {
   }
 }
 
+// PC端修改缴费状态校验参数
+class adminDormitoryPaymentEdit extends LinValidator {
+  constructor() {
+    super()
+    this.id = [new Rule('isLength', '参数必传', {
+      min: 1
+    })]
+  }
+
+  // 异步查询数据库 判断 id dorRoomId
+  async validateParams(vals) {
+    const {
+      db
+    } = require(`${process.cwd()}/core/db`)
+    let {
+      id
+    } = vals.body
+    const sql = 'SELECT id FROM tb_dormitory_payment WHERE id = ? and status = 1;'
+    let data = [id]
+    const res = await db.query(sql, data)
+    if (res.err) {
+      throw new Error('发生错误')
+    } else {
+      let data = res.data[0]
+      if (!data)
+        throw new Error('不允许修改')
+    }
+  }
+}
+
 
 
 module.exports = {
@@ -416,5 +446,6 @@ module.exports = {
   adminDorRoomVaildator,
   adminDorRoomDeleteVaildator,
   adminStudentInfoVaildator,
-  adminStudentInfoDeleteVaildator
+  adminStudentInfoDeleteVaildator,
+  adminDormitoryPaymentEdit
 }
