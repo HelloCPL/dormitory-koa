@@ -47,6 +47,7 @@ class Mysql {
     return new Promise((resolve) => {
       pool.getConnection((err, connection) => {
         if (err) {
+          console.log(err)
           throw new global.errs.HttpException('创建数据库连接失败')
         } else {
           // 开启事务

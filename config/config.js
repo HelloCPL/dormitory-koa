@@ -4,8 +4,10 @@ module.exports = {
   database: { // 数据库参数配置
     dbName: 'dormitory',
     user: 'root',
-    password: 'root',
-    host: 'localhost',
+    // password: 'root',
+    password: 'CPLabc603.',
+    // host: 'localhost',
+    host: '106.55.153.80',
     port: 3306,
     connectionLimit: 500
   },
@@ -22,7 +24,10 @@ module.exports = {
     appSecret: 'e6f25f907790b77055c731eae3fdc36e',
     loginUrl: 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code'
   },
-  servicesUrl: 'http://localhost:3000/', //服务器请求前缀
-  fileUrl: 'http://localhost:3000/files/', // 文件静态资源前缀
-  imageUrl: 'http://localhost:3000/images/', // 图片静态资源前缀
+  // servicesUrl: 'http://localhost:3000/', //服务器请求前缀
+  // fileUrl: 'http://localhost:3000/files/', // 文件静态资源前缀
+  // imageUrl: 'http://localhost:3000/images/', // 图片静态资源前缀
+  servicesUrl: 'http://http://106.55.153.80:3000/', //服务器请求前缀
+  fileUrl: 'http://http://106.55.153.80:3000/files/', // 文件静态资源前缀
+  imageUrl: 'http://http://106.55.153.80:3000/images/', // 图片静态资源前缀
 }
