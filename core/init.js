@@ -27,6 +27,7 @@ class InitManager {
   static initStatic() {
     // 处理公共的静态资源目录
     const pathStatic = path.join(__dirname, '../static')
+    console.log('静态资源路径：' + pathStatic)
     InitManager.app.use(Static(pathStatic))
     // 访问路径如  http://localhost:3000/images/bg.jpg
 
