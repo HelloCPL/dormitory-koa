@@ -40,5 +40,5 @@ app.use(koaBody({
 InitManger.init(app)
 // 设置监听
 app.listen(global.config.port, () => {
-  console.log('再次运行***')
+  console.log('service running...')
 })
