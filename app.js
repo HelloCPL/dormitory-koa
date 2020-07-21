@@ -19,7 +19,7 @@ app.use(cors())
 //   ctx.set('Access-Control-Allow-Headers', 'content-type');
 //   ctx.set('Access-Control-Allow-Methods', 'OPTIONS,GET,HEAD,PUT,POST,DELETE,PATCH')
 //   if (ctx.method == 'OPTIONS') {
-//     ctx.body = 'ok'
+//     ctx.body = 200
 //   }
 //   await next()
 // });

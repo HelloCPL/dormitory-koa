@@ -27,7 +27,7 @@ module.exports = {
   // servicesUrl: 'http://localhost:3000/', //服务器请求前缀
   // fileUrl: 'http://localhost:3000/files/', // 文件静态资源前缀
   // imageUrl: 'http://localhost:3000/images/', // 图片静态资源前缀
-  servicesUrl: 'http://http://106.55.153.80:3000/', //服务器请求前缀
-  fileUrl: 'http://http://106.55.153.80:3000/files/', // 文件静态资源前缀
-  imageUrl: 'http://http://106.55.153.80:3000/images/', // 图片静态资源前缀
+  servicesUrl: 'http://106.55.153.80:3000/', //服务器请求前缀
+  fileUrl: 'http://106.55.153.80:3000/files/', // 文件静态资源前缀
+  imageUrl: 'http://106.55.153.80:3000/images/', // 图片静态资源前缀
 }
