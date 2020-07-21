@@ -93,7 +93,6 @@ class UsersModel {
     ]
     // let sql = 'DELETE FROM tb_students WHERE FIND_IN_SET(id, ?);'
     let res = await db.execTrans(sqlList)
-    console.log(res)
     if (res.err) {
       throw new global.errs.HttpException(res.err)
     } else {

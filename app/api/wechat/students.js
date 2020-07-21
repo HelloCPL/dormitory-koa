@@ -26,8 +26,6 @@ router.post('/property/add', async (ctx, next) => {
   const name = global.tools.judgeArray(ctx.request.body.name, 'name参数有误')
   // 获取用户信息
   const userInfo = await CommonModel.getUserInfo(ctx.auth)
-  console.log(name)
-  console.log(userInfo)
   // 插入数据并返回
   await StudentsModel.addProperty(name, userInfo)
 })

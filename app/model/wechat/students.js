@@ -225,7 +225,6 @@ class StudentsModel {
          dataList[i]['endTimeStr'] = global.tools.dateFormat(dataList[i]['endTime'], 'YYYY-MM-DD')
         // 修改 status 状态
         let nowTime = global.tools.getTimeValue()
-        console.log(nowTime)
         if (dataList[i]['status'] == 1 || dataList[i]['status'] == 2) {
           if (nowTime < dataList[i]['startTime']) {
             dataList[i]['status'] = 1

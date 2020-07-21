@@ -43,7 +43,6 @@ class ParameterValidator extends LinValidator {
         new Rule(rule.rules[0], rule.rules[1], rule.rules[2])
       )
     }
-    console.log(ruleList)
     this[rule.key] = ruleList
   }
 }
@@ -361,7 +360,6 @@ class adminStudentInfoVaildator extends LinValidator {
       throw new Error('发生错误')
     } else {
       let data = res.data[0]
-      console.log(data)
       if (!data)
         throw new Error('宿舍房间不存在')
       if (data.count >= data.total)

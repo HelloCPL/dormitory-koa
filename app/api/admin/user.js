@@ -29,7 +29,6 @@ router.post('/login', async (ctx, next) => {
   // 获取并校验参数
   const v = await new loginVaildator().validate(ctx)
   let username = await v.get('body.username')
-  console.log(username)
   // 返回管理员信息及其权限
   await UsersModel.findAdminInfo(username)
 })

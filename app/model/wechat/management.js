@@ -11,7 +11,6 @@ class ManagementModel {
   static async noticesList(type, pageNo, pageSize) {
     let page = (pageNo - 1) * pageSize
     let nowTime = global.tools.getTimeValue()
-    console.log(nowTime)
     let sqlList = [{
         sql: 'SELECT COUNT(id) as total FROM tb_management_notices WHERE type = ? and is_public = 1 and start_time < ? and end_time > ?;',
         data: [type, nowTime, nowTime]

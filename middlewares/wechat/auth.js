@@ -21,7 +21,6 @@ class Auth {
   get m() {
     return async (ctx, next) => {
       if (ctx.path.startsWith('/api/wechat') && isToken(ctx.method, ctx.path)) {
-        console.log(`访问接口：${ctx.method} ${ctx.path}`)
         // 获取解析后的token
         const userToken = basicAuth(ctx.req)
         let errMsg = 'token不合法'
@@ -42,7 +41,6 @@ class Auth {
         }
         await next()
       } else {
-        console.log(`访问接口：${ctx.method} ${ctx.path}`)
         await next()
       }
     }

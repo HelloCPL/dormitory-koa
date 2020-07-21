@@ -85,9 +85,6 @@ class InitManager {
     global.getCamelCase = getCamelCase
     global.toParse = toParse
     global.toStringify = toStringify
-    // let name = returnRandomNumber('shkdaf.jpg')
-    // console.log(name)
-    
   }
 
   // 将普通的参数校验方法挂载到全局
