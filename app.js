@@ -23,7 +23,7 @@ const catchError = require('./middlewares/exception')
 const app = new Koa()
 
 // 使用ssl
-app.use(ssilfy())
+// app.use(ssilfy())
 
 // 跨域处理
 const cors = require('koa2-cors')
