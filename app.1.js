@@ -1,12 +1,3 @@
-// 使用 https
-const http = require('http')
-const https = require('https')
-const fs = require('fs')
-const options = {
-  key: fs.readFileSync('./keystore/privatekey.pem'),
-  cert: fs.readFileSync('./keystore/certificate.pem')
-}
-
 // 导入koa
 const Koa = require('koa')
 // 导入koa-bodyparser处理body参数
@@ -48,16 +39,6 @@ app.use(koaBody({
 // 初始化，设置静态资源托管，自动加载路由，添加全局变量等
 InitManger.init(app)
 // 设置监听
-// app.listen(global.config.port, () => {
-//   console.log('service running...')
-// })
-
-// 设置 http 监听
-http.createServer(app.callback()).listen(global.config.port, () => {
-  console.log(`Http Service(${global.config.port}) Running...`)
-})
-  
-// 设置 https 监听
-https.createServer(options, app.callback()).listen(global.config.httpsPort, function () {
-  console.log(`Https Service(${global.config.httpsPort}) Running...`)
+app.listen(global.config.port, () => {
+  console.log('service running...')
 })

@@ -1,6 +1,7 @@
 module.exports = {
   environment: 'dev', // prod 为生产环境 dev 为开发环境
   port: 3000, // 启动端口号
+  httpsPort: 443, // https 启动端口号
   database: { // 数据库参数配置
     dbName: 'dormitory',
     user: 'root',
