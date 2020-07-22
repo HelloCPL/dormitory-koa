@@ -1,10 +1,12 @@
 // 使用 https
 const http = require('http')
 const https = require('https')
+const ssilfy = require('koa-sslify').default
+
 const fs = require('fs')
 const options = {
-  key: fs.readFileSync('./keystore/privatekey.pem'),
-  cert: fs.readFileSync('./keystore/certificate.pem')
+  key: fs.readFileSync('./httpskey/privatekey.pem'),
+  cert: fs.readFileSync('./httpskey/certificate.pem')
 }
 
 // 导入koa
@@ -19,6 +21,9 @@ const InitManger = require('./core/init')
 const catchError = require('./middlewares/exception')
 
 const app = new Koa()
+
+// 使用ssl
+app.use(ssilfy())
 
 // 跨域处理
 const cors = require('koa2-cors')
