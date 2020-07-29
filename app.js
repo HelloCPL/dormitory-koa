@@ -59,10 +59,10 @@ InitManger.init(app)
 
 // 设置 http 监听
 http.createServer(app.callback()).listen(global.config.port, () => {
-  console.log(`Http Service(${global.config.port}) Running1...`)
+  console.log(`Http Service(${global.config.port}) Running123...`)
 })
   
 // 设置 https 监听
 https.createServer(options, app.callback()).listen(global.config.httpsPort, function () {
-  console.log(`Https Service(${global.config.httpsPort}) Running1...`)
+  console.log(`Https Service(${global.config.httpsPort}) Running123...`)
 })
